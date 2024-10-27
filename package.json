@@ -14,7 +14,10 @@
     "lint:prettier": "prettier . --check"
   },
   "dependencies": {
+    "lucide-vue-next": "^0.453.0",
     "nuxt": "^3.13.2",
+    "nuxt-svgo": "^4.0.6",
+    "slugify": "^1.6.6",
     "vue": "latest",
     "vue-router": "latest"
   },
@@ -26,6 +29,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3"
   }

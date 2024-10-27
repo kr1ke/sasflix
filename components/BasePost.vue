@@ -1,14 +1,31 @@
 <script setup lang="ts">
+import slugify from 'slugify';
+
+import Like from 'assets/icons/like.svg';
+import LikeActive from 'assets/icons/like-active.svg';
+import Dislike from 'assets/icons/dislike.svg';
+import DislikeActive from 'assets/icons/dislike-active.svg';
+
 interface Props {
-  title?: string;
-  text?: string;
-  tags?: string[];
+  id: number;
+  title: string;
+  text: string;
+  tags: string[];
+  reactions: {
+    likes: number;
+    dislikes: number;
+    isLiked: boolean;
+    isDisliked: boolean;
+  };
 }
 
-const defaultTitle = 'defaultTitle';
-const defaultText = 'defaultText';
+const { title, text, tags, id } = defineProps<Props>();
 
-const { title = defaultTitle, text = defaultText, tags } = defineProps<Props>();
+const emit = defineEmits<{
+  (e: 'onLike' | 'onDislike', id: number): void;
+}>();
+
+const routeSlug = slugify(title, { lower: true });
 </script>
 <template>
   <div class="flex flex-col items-start">
@@ -18,30 +35,86 @@ const { title = defaultTitle, text = defaultText, tags } = defineProps<Props>();
     <p class="mt-4 text-xl text-primary-back">
       {{ text }}
     </p>
-    <div class="mt-6 flex justify-start w-full gap-2">
+    <div class="mt-6 flex w-full items-center justify-start gap-2 max-md:flex-wrap">
+      <div class="flex items-center gap-[1px]">
+        <!--        ширина кнопок не фиксирована по макету -->
+        <button
+          class="flex h-[27px] items-center gap-1.5 rounded-l-[30px] bg-primary-gray py-2 pl-3 pr-2"
+          :class="[{ 'bg-primary-red': reactions.isLiked }]"
+          @click="emit('onLike', id)"
+        >
+          <span
+            class="flex items-center gap-1"
+            :class="[
+              reactions.isLiked ? 'text-primary-white' : 'text-secondary-black',
+            ]"
+          >
+            <LikeActive
+              v-if="reactions.isLiked"
+              class="w-[13px]"
+              filled
+              :font-controlled="false"
+            />
+            <Like v-else class="w-[13px]" filled :font-controlled="false" />
+            <span class="text-sm tracking-[-0.078px] text-inherit">Like</span>
+          </span>
+          <span
+            class="text-sm tracking-[-1px] text-gray-border"
+            :class="{ 'text-primary-white': reactions.isLiked }"
+            >{{ reactions.likes }}</span
+          >
+        </button>
+        <button
+          class="flex h-[27px] items-center gap-1.5 rounded-r-[30px] bg-primary-gray py-2 pl-3 pr-2"
+          :class="[{ 'bg-secondary-black': reactions.isDisliked }]"
+          @click="emit('onDislike', id)"
+        >
+          <span class="flex items-center gap-1">
+            <DislikeActive
+              v-if="reactions.isDisliked"
+              class="w-[13px]"
+              filled
+              :font-controlled="false"
+            />
+            <Dislike v-else class="w-[13px]" filled :font-controlled="false" />
+            <span
+              class="text-sm tracking-[-0.078px]"
+              :class="[
+                reactions.isDisliked
+                  ? 'text-primary-white'
+                  : 'text-secondary-black',
+              ]"
+              >Trash</span
+            >
+          </span>
+          <span
+            class="text-sm tracking-[-1px]"
+            :class="[
+              reactions.isDisliked ? 'text-primary-white' : 'text-gray-border',
+            ]"
+            >{{ reactions.dislikes }}</span
+          >
+        </button>
+      </div>
       <nuxt-link
-        to="/"
-        class="text-accent-primary text-sm underline underline-offset-4 decoration-accent-secondary decoration-[0.5px]"
+        :to="`/${routeSlug}`"
+        class="text-sm text-accent-primary underline decoration-accent-secondary decoration-[0.5px] underline-offset-4"
       >
         Open comments
       </nuxt-link>
-      <span class="text-gray-border text-sm">Today</span>
-      <div class="flex gap-1 items-center justify-start pl-2.5">
-        <a
-          v-for="(tag, index) in tags"
-          :key="tag"
-          href="#"
-          class="tag"
-        >
-          <span class="tracking-[-0.078px] text-sm">{{ tag }}</span>
-        </a>
+      <span class="text-sm text-gray-border">Today</span>
+      <div class="flex items-center justify-start gap-1 pl-2.5">
+        <span v-for="tag in tags" :key="tag" ref="#" class="tag">
+          <span class="text-sm tracking-[-0.078px]">{{ tag }}</span>
+        </span>
       </div>
     </div>
   </div>
 </template>
 <style>
 .tag {
-  @apply first:pl-0 first:rounded-l-[0px] relative h-[18px] bg-primary-gray text-secondary-black flex items-center p-1 rounded-[3px];
+  @apply relative flex h-[18px] items-center rounded-[3px] bg-primary-gray p-1 text-secondary-black first:rounded-l-[0px] first:pl-0;
+
   &:first-child::before {
     content: '';
     position: absolute;

@@ -8,6 +8,8 @@ interface IPost {
   reactions: {
     likes: number;
     dislikes: number;
+    isLiked: boolean;
+    isDisliked: boolean;
   };
   views: number;
   userId: number;
