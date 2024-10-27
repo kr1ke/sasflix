@@ -29,8 +29,18 @@ const usePosts = () => {
     return await api<IPostsList>(() => '/posts', options);
   };
 
+  const fetchPostItem = async (id:number, options = {}): Promise<IPostsList> => {
+    return await api<IPostsList>(() => `/post/${id}`, options);
+  };
+
+  const fetchPostComments = async (id:number, options = {}): Promise<IPostsList> => {
+    return await api<IPostsList>(() => `/post/${id}/comments`, options);
+  };
+
   return {
     fetchPosts,
+    fetchPostItem,
+    fetchPostComments
   };
 };
 

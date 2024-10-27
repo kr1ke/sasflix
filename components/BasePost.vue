@@ -5,6 +5,7 @@ import Like from 'assets/icons/like.svg';
 import LikeActive from 'assets/icons/like-active.svg';
 import Dislike from 'assets/icons/dislike.svg';
 import DislikeActive from 'assets/icons/dislike-active.svg';
+import PostMeta from '~/components/PostMeta.vue';
 
 interface Props {
   id: number;
@@ -25,7 +26,7 @@ const emit = defineEmits<{
   (e: 'onLike' | 'onDislike', id: number): void;
 }>();
 
-const routeSlug = slugify(title, { lower: true });
+const postSlug = slugify(title, { lower: true });
 </script>
 <template>
   <div class="flex flex-col items-start">
@@ -35,7 +36,9 @@ const routeSlug = slugify(title, { lower: true });
     <p class="mt-4 text-xl text-primary-back">
       {{ text }}
     </p>
-    <div class="mt-6 flex w-full items-center justify-start gap-2 max-md:flex-wrap">
+    <div
+      class="mt-6 flex w-full items-center justify-start gap-2 max-md:flex-wrap"
+    >
       <div class="flex items-center gap-[1px]">
         <!--        ширина кнопок не фиксирована по макету -->
         <button
@@ -97,17 +100,12 @@ const routeSlug = slugify(title, { lower: true });
         </button>
       </div>
       <nuxt-link
-        :to="`/${routeSlug}`"
+        :to="{ name: 'post', params: { post: `${postSlug}-${id}` } }"
         class="text-sm text-accent-primary underline decoration-accent-secondary decoration-[0.5px] underline-offset-4"
       >
         Open comments
       </nuxt-link>
-      <span class="text-sm text-gray-border">Today</span>
-      <div class="flex items-center justify-start gap-1 pl-2.5">
-        <span v-for="tag in tags" :key="tag" ref="#" class="tag">
-          <span class="text-sm tracking-[-0.078px]">{{ tag }}</span>
-        </span>
-      </div>
+      <PostMeta :tags="tags" :date="'today'" />
     </div>
   </div>
 </template>

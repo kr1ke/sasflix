@@ -3,7 +3,6 @@
     v-if="status === 'success' && localPostsData"
     class="flex max-w-[676px] flex-col items-center gap-8"
   >
-    {{localPostsData.posts[0]}}
     <BasePost
       v-for="post in localPostsData.posts"
       :id="post.id"
