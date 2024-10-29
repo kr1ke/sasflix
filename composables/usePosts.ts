@@ -1,5 +1,7 @@
 import { useApi } from '~/composables/useApi';
 
+// Posts types
+
 interface IPost {
   id: number;
   title: string;
@@ -22,6 +24,29 @@ interface IPostsList {
   total: number;
 }
 
+// Comments types
+
+interface ICommentUser {
+  id: number;
+  username: string;
+  fullName: string;
+}
+
+interface IComment {
+  id: number;
+  body: string;
+  postId: number;
+  likes: number;
+  user: ICommentUser;
+}
+
+interface ICommentsData {
+  comments: IComment[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
 const usePosts = () => {
   const api = useApi();
 
@@ -29,20 +54,26 @@ const usePosts = () => {
     return await api<IPostsList>(() => '/posts', options);
   };
 
-  const fetchPostItem = async (id:number, options = {}): Promise<IPostsList> => {
+  const fetchPostItem = async (
+    id: number,
+    options = {},
+  ): Promise<IPostsList> => {
     return await api<IPostsList>(() => `/post/${id}`, options);
   };
 
-  const fetchPostComments = async (id:number, options = {}): Promise<IPostsList> => {
+  const fetchPostComments = async (
+    id: number,
+    options = {},
+  ): Promise<IPostsList> => {
     return await api<IPostsList>(() => `/post/${id}/comments`, options);
   };
 
   return {
     fetchPosts,
     fetchPostItem,
-    fetchPostComments
+    fetchPostComments,
   };
 };
 
 export { usePosts };
-export type { IPost, IPostsList };
+export type { IPost, IPostsList, ICommentsData, ICommentUser, IComment };

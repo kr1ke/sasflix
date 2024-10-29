@@ -1,22 +1,20 @@
 <template>
   <div>
-    <main class="flex justify-center items-start">
+    <main class="flex items-start justify-center">
       <div class="max-w-[676px]">
         <BasePost
+          v-if="status === 'success' && localPostItemData"
           :id="localPostItemData.id"
           :key="localPostItemData.id"
           :title="localPostItemData.title"
           :text="localPostItemData.body"
           :tags="localPostItemData.tags"
           :reactions="localPostItemData.reactions"
-          @on-like="onLike"
-          @on-dislike="onDislike"
+          :show-comments-link="false"
+          @on-like="onLike(localPostItemData)"
+          @on-dislike="onDislike(localPostItemData)"
         />
-        <!--    <BasePost />-->
-        <hr>
-        <div v-if="commentsStatus === 'success' && localCommentsData">
-          {{localCommentsData}}
-        </div>
+        <PostCommentsList :post-id="postId" />
       </div>
     </main>
   </div>
@@ -24,10 +22,13 @@
 <script setup lang="ts">
 import type { IPost } from '~/composables/usePosts';
 
-const { fetchPostItem, fetchPostComments } = usePosts();
+import { usePostReactions } from '~/composables/usePostReactions';
+
+const { onLike, onDislike } = usePostReactions();
+
+const { fetchPostItem } = usePosts();
 
 const localPostItemData = ref<IPost | null>(null);
-const localCommentsData = ref<IPost | null>(null);
 
 const route = useRoute();
 const { post } = route.params;
@@ -40,19 +41,20 @@ const getPostId = (): number => {
 
 const postId: number = getPostId();
 
-const { data: postData } = await useAsyncData(() =>
+const { status } = await useAsyncData(() =>
   fetchPostItem(postId, {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onResponse: ({ response }: any) => {
-      localPostItemData.value = response._data as IPost;
+      const reactions = {
+        ...response._data.reactions,
+        isLiked: false,
+        isDisliked: false,
+      }
+      localPostItemData.value = {
+        ...response._data,
+        reactions,
+      } as IPost;
     },
   }),
 );
-
-const { status:commentsStatus } = await useAsyncData(() =>
-  fetchPostComments(postId, {
-    onResponse: ({ response }: any) => {
-      localCommentsData.value = response._data as IPost;
-    },
-  })
-)
 </script>

@@ -38,10 +38,10 @@ const postSlug = slugify(title, { lower: true });
 </script>
 <template>
   <div class="flex flex-col items-start">
-    <h2 class="text-[28px] font-bold tracking-[-1.45px] text-primary-back">
+    <h2 class="text-[28px] font-bold tracking-[-1.45px] text-primary-black">
       {{ title }}
     </h2>
-    <p class="mt-4 text-xl text-primary-back">
+    <p class="mt-4 text-xl text-primary-black">
       {{ text }}
     </p>
     <div

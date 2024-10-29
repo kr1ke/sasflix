@@ -1,12 +1,12 @@
 import type { IPost } from '~/composables/usePosts';
 
-export function useReactions(post:IPost) {
-  const toggleReaction = (id: number, type: 'like' | 'dislike') => {
+const usePostReactions = () => {
+  const toggleReaction = (post: IPost, type: 'like' | 'dislike') => {
     if (!post) return;
 
     const { reactions } = post;
 
-    // для лаков
+    // для лайков
     if (type === 'like') {
       if (reactions.isDisliked) {
         reactions.dislikes--;
@@ -34,16 +34,19 @@ export function useReactions(post:IPost) {
     }
   };
 
-  const onLike = (id: number) => {
-    toggleReaction(id, 'like');
+  const onLike = (post: IPost) => {
+    toggleReaction(post, 'like');
   };
 
-  const onDislike = (id: number) => {
-    toggleReaction(id, 'dislike');
+  const onDislike = (post: IPost) => {
+    toggleReaction(post, 'dislike');
   };
 
   return {
+    toggleReaction,
     onLike,
-    onDislike
+    onDislike,
   };
-}
+};
+
+export { usePostReactions };

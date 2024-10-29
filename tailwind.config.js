@@ -13,7 +13,7 @@ export default {
       colors: {
         'accent-primary': '#FF6B00',
         'accent-secondary': 'rgba(255, 107, 0, 0.30)',
-        'primary-back': '#05090E',
+        'primary-black': '#05090E',
         'secondary-black': '#040405',
         'primary-gray': 'rgba(4, 4, 5, 0.04)',
         'gray-border': 'rgba(4, 4, 5, 0.22)',

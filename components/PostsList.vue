@@ -11,14 +11,17 @@
       :text="post.body"
       :tags="post.tags"
       :reactions="post.reactions"
-      @on-like="onLike"
-      @on-dislike="onDislike"
+      @on-like="onLike(post)"
+      @on-dislike="onDislike(post)"
     />
   </section>
 </template>
 
 <script setup lang="ts">
 import type { IPost, IPostsList } from '~/composables/usePosts';
+
+import { usePostReactions } from '~/composables/usePostReactions';
+const { onLike, onDislike } = usePostReactions();
 
 const { fetchPosts } = usePosts();
 
@@ -41,48 +44,4 @@ const { status } = await useAsyncData(() =>
     },
   }),
 );
-
-const toggleReaction = (id: number, type: 'like' | 'dislike') => {
-  if (!localPostsData.value) return;
-
-  const post = localPostsData.value.posts.find((post) => post.id === id);
-  if (!post) return;
-
-  const { reactions } = post;
-
-  // для лайков
-  if (type === 'like') {
-    if (reactions.isDisliked) {
-      reactions.dislikes--;
-      reactions.isDisliked = false;
-    }
-    if (reactions.isLiked) {
-      reactions.likes--;
-    } else {
-      reactions.likes++;
-    }
-    reactions.isLiked = !reactions.isLiked;
-  }
-  // для дизлайков
-  else if (type === 'dislike') {
-    if (reactions.isLiked) {
-      reactions.likes--;
-      reactions.isLiked = false;
-    }
-    if (reactions.isDisliked) {
-      reactions.dislikes--;
-    } else {
-      reactions.dislikes++;
-    }
-    reactions.isDisliked = !reactions.isDisliked;
-  }
-};
-
-const onLike = (id: number) => {
-  toggleReaction(id, 'like');
-};
-
-const onDislike = (id: number) => {
-  toggleReaction(id, 'dislike');
-};
 </script>

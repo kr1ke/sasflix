@@ -1,4 +1,4 @@
-export const useApi = () => {
+const useApi = () => {
   const req = $fetch.create({
     baseURL: 'https://dummyjson.com/',
   });
@@ -6,3 +6,5 @@ export const useApi = () => {
   return async <T>(url: () => string, options = {}) =>
     (await req(url(), options)) as T;
 };
+
+export { useApi };

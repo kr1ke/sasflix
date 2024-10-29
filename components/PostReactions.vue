@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Like from 'assets/icons/like.svg';
-import LikeActive from 'assets/icons/like-active.svg';
-import Dislike from 'assets/icons/dislike.svg';
-import DislikeActive from 'assets/icons/dislike-active.svg';
+import Like from '~/assets/icons/like.svg';
+import LikeActive from '~/assets/icons/like-active.svg';
+import Dislike from '~/assets/icons/dislike.svg';
+import DislikeActive from '~/assets/icons/dislike-active.svg';
 
 interface Props {
   id: number,
