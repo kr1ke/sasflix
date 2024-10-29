@@ -1,11 +1,24 @@
 <template>
   <div>
-    {{ postData }}
-<!--    <BasePost />-->
-    <hr>
-    <div v-if="commentsStatus === 'success' && localCommentsData">
-      {{localCommentsData}}
-    </div>
+    <main class="flex justify-center items-start">
+      <div class="max-w-[676px]">
+        <BasePost
+          :id="localPostItemData.id"
+          :key="localPostItemData.id"
+          :title="localPostItemData.title"
+          :text="localPostItemData.body"
+          :tags="localPostItemData.tags"
+          :reactions="localPostItemData.reactions"
+          @on-like="onLike"
+          @on-dislike="onDislike"
+        />
+        <!--    <BasePost />-->
+        <hr>
+        <div v-if="commentsStatus === 'success' && localCommentsData">
+          {{localCommentsData}}
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 <script setup lang="ts">

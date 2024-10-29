@@ -50,7 +50,7 @@ const toggleReaction = (id: number, type: 'like' | 'dislike') => {
 
   const { reactions } = post;
 
-  // для лаков
+  // для лайков
   if (type === 'like') {
     if (reactions.isDisliked) {
       reactions.dislikes--;
