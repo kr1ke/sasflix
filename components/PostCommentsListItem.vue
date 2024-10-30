@@ -48,7 +48,8 @@ const emit = defineEmits<{
           Return
         </button>
       </div>
-      <div class="mt-4 flex items-center gap-5">
+      <!--      comments meta data-->
+      <div v-if="isDeleted" class="mt-4 flex items-center gap-5">
         <span
           class="text-sm leading-[10px] tracking-[-0.078px] text-gray-border"
           >{{ date }}</span
