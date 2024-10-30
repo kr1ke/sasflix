@@ -4,8 +4,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   app: {
     head: {
-      title: 'ikakprosto.ru'
-    }
+      title: 'ikakprosto.ru',
+    },
   },
   devtools: { enabled: true },
   modules: ['@nuxt/eslint', 'nuxt-svgo'],

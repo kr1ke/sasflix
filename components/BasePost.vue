@@ -38,10 +38,14 @@ const postSlug = slugify(title, { lower: true });
 </script>
 <template>
   <div class="flex flex-col items-start">
-    <h2 class="text-[28px] leading-[24px] font-bold tracking-[-1.45px] text-primary-black">
+    <h2
+      class="text-[28px] font-bold leading-[24px] tracking-[-1.45px] text-primary-black"
+    >
       {{ title }}
     </h2>
-    <p class="mt-4 text-[20px] font-normal text-primary-black leading-[20px] tracking-[-1px]">
+    <p
+      class="mt-4 text-[20px] font-normal leading-[20px] tracking-[-1px] text-primary-black"
+    >
       {{ text }}
     </p>
     <div
@@ -57,7 +61,7 @@ const postSlug = slugify(title, { lower: true });
       <nuxt-link
         v-if="showCommentsLink"
         :to="{ name: 'post', params: { post: `${postSlug}-${id}` } }"
-        class="text-sm text-accent-primary underline decoration-accent-secondary decoration-[0.5px] underline-offset-4"
+        class="text-sm tracking-[-0.078px] text-accent-primary underline decoration-accent-secondary decoration-[0.5px] underline-offset-4"
       >
         Open comments
       </nuxt-link>

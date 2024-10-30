@@ -18,7 +18,8 @@ export default {
         'primary-gray': 'rgba(4, 4, 5, 0.04)',
         'gray-border': 'rgba(4, 4, 5, 0.22)',
         'primary-red': '#FF3B30',
-        'primary-white': 'rgba(255, 255, 255, 0.95)'
+        'secondary-red': '#EB5757',
+        'primary-white': 'rgba(255, 255, 255, 0.95)',
       },
     },
   },

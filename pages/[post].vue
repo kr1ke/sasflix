@@ -6,6 +6,7 @@
           v-if="status === 'success' && localPostItemData"
           :id="localPostItemData.id"
           :key="localPostItemData.id"
+          class="py-2.5"
           :title="localPostItemData.title"
           :text="localPostItemData.body"
           :tags="localPostItemData.tags"
@@ -49,7 +50,7 @@ const { status } = await useAsyncData(() =>
         ...response._data.reactions,
         isLiked: false,
         isDisliked: false,
-      }
+      };
       localPostItemData.value = {
         ...response._data,
         reactions,

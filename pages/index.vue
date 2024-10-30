@@ -1,5 +1,5 @@
 <template>
-  <main class="flex justify-center items-start">
+  <main class="flex items-start justify-center">
     <PostsList />
   </main>
 </template>

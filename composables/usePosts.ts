@@ -37,6 +37,7 @@ interface IComment {
   body: string;
   postId: number;
   likes: number;
+  isDeleted?: boolean;
   user: ICommentUser;
 }
 
