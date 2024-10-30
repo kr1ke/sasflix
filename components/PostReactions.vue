@@ -5,7 +5,7 @@ import Dislike from '~/assets/icons/dislike.svg';
 import DislikeActive from '~/assets/icons/dislike-active.svg';
 
 interface Props {
-  id: number,
+  id: number;
   reactions: {
     likes: number;
     dislikes: number;
@@ -29,12 +29,7 @@ const emit = defineEmits<{
       :class="[{ 'bg-primary-red': reactions.isLiked }]"
       @click="emit('onLike', id)"
     >
-      <span
-        class="flex items-center gap-1"
-        :class="[
-          reactions.isLiked ? 'text-primary-white' : 'text-secondary-black',
-        ]"
-      >
+      <span class="flex items-center gap-1">
         <LikeActive
           v-if="reactions.isLiked"
           class="w-[13px]"
@@ -42,11 +37,21 @@ const emit = defineEmits<{
           :font-controlled="false"
         />
         <Like v-else class="w-[13px]" filled :font-controlled="false" />
-        <span class="text-sm tracking-[-0.078px] text-inherit">Like</span>
+        <span
+          class="text-sm tracking-[-0.078px]"
+          :class="[
+            reactions.isLiked ? 'text-primary-white' : 'text-secondary-black',
+          ]"
+          >Like</span
+        >
       </span>
       <span
-        class="text-sm tracking-[-1px] text-gray-border"
-        :class="{ 'text-primary-white': reactions.isLiked }"
+        class="text-sm tracking-[-1px]"
+        :class="[
+          reactions.isLiked
+            ? 'text-primary-white'
+            : 'text-secondary-black opacity-30',
+        ]"
         >{{ reactions.likes }}</span
       >
     </button>
@@ -76,7 +81,9 @@ const emit = defineEmits<{
       <span
         class="text-sm tracking-[-1px]"
         :class="[
-          reactions.isDisliked ? 'text-primary-white' : 'text-gray-border',
+          reactions.isDisliked
+            ? 'text-primary-white opacity-40'
+            : 'text-secondary-black opacity-30',
         ]"
         >{{ reactions.dislikes }}</span
       >

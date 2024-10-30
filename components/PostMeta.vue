@@ -7,7 +7,7 @@ interface Props {
 const { date, tags } = defineProps<Props>()
 </script>
 <template>
-  <span class="text-sm text-gray-border">{{ date }}</span>
+  <span class="text-sm">{{ date }}</span>
   <div class="flex items-center justify-start gap-1 pl-2.5">
     <span v-for="tag in tags" :key="tag" ref="#" class="tag">
       <span class="text-sm tracking-[-0.078px]">{{ tag }}</span>
@@ -21,7 +21,7 @@ const { date, tags } = defineProps<Props>()
   &:first-child::before {
     content: '';
     position: absolute;
-    left: -9px;
+    left: -10px;
     width: 10px;
     height: 100%;
     background-image: url('../assets/icons/rounded-arrow.svg');
