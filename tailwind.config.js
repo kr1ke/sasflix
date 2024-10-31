@@ -9,6 +9,10 @@ export default {
     './error.vue',
   ],
   theme: {
+    fontFamily: {
+      SFProText: ['SF Pro Text', 'Arial', 'sans-serif'], // до загрузки - Arial, после - SFProText
+      SFProDisplay: ['SF Pro Display', 'Arial', 'sans-serif'], // до загрузки - Arial, после - SFProDisplay
+    },
     extend: {
       colors: {
         'accent-primary': '#FF6B00',

@@ -7,7 +7,7 @@ const { onLike, onDislike } = usePostReactions();
 
 const { fetchPosts } = usePosts();
 
-const { data, status } = await useAsyncData<IPostsList>(
+const { data, status } = await useLazyAsyncData<IPostsList>(
   () =>
     fetchPosts({
       query: {

@@ -1,11 +1,11 @@
 @import 'tailwind.css';
 @import 'fonts.css';
 
-* {
-  font-family: 'SF Pro Text', sans-serif;
+body{
+  @apply font-SFProText;
   font-feature-settings:
-    'liga' off,
-    'clig' off;
+          'liga' off,
+          'clig' off;
   leading-trim: both;
   text-edge: cap;
 }
