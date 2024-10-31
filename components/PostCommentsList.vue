@@ -33,16 +33,19 @@ const commentsTitle = computed(() => {
 });
 
 const getCommentById = (id: number) => {
+  if (!postCommentsData.value) return null;
   return postCommentsData.value.comments.find((comment) => comment.id === id);
 };
 
 const softDeleteComment = (id: number) => {
   const comment = getCommentById(id);
+  if (!comment) return;
   comment.isDeleted = true;
 };
 
 const softRestoreComment = (id: number) => {
   const comment = getCommentById(id);
+  if (!comment) return;
   comment.isDeleted = false;
 };
 </script>
@@ -58,7 +61,7 @@ const softRestoreComment = (id: number) => {
         v-for="comment in postCommentsData.comments"
         :id="comment.id"
         :key="comment.id"
-        :is-deleted="comment.isDeleted"
+        :is-deleted="!!comment.isDeleted"
         :body="comment.body"
         :user="comment.user"
         :date="'Today'"

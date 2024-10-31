@@ -16,8 +16,8 @@ const getPostId = (): number => {
 
 const postId: number = getPostId();
 
-const { data:postItem, status } = await useAsyncData<IPost>(() =>
-    fetchPostItem(postId),
+const { data: postItem, status } = await useAsyncData<IPost>(
+  () => fetchPostItem(postId),
   {
     // добавляем isLiked и isDisliked к посту
     transform: (data: IPost) => {
@@ -31,7 +31,7 @@ const { data:postItem, status } = await useAsyncData<IPost>(() =>
         reactions,
       } as IPost;
     },
-  }
+  },
 );
 </script>
 <template>
@@ -39,7 +39,7 @@ const { data:postItem, status } = await useAsyncData<IPost>(() =>
     <main class="flex items-start justify-center">
       <div class="max-w-[676px]">
         <BasePost
-          v-if="status === 'success'"
+          v-if="status === 'success' && postItem"
           :id="postItem.id"
           :key="postItem.id"
           class="py-2.5"

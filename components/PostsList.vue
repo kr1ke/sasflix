@@ -31,7 +31,7 @@ const { data, status } = await useAsyncData<IPostsList>(
 
 <template>
   <section
-    v-if="status === 'success'"
+    v-if="status === 'success' && data"
     class="flex max-w-[676px] flex-col items-center gap-8"
   >
     <BasePost

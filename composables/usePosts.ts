@@ -55,18 +55,15 @@ const usePosts = () => {
     return await api<IPostsList>(() => '/posts', options);
   };
 
-  const fetchPostItem = async (
-    id: number,
-    options = {},
-  ): Promise<IPostsList> => {
-    return await api<IPostsList>(() => `/post/${id}`, options);
+  const fetchPostItem = async (id: number, options = {}): Promise<IPost> => {
+    return await api<IPost>(() => `/post/${id}`, options);
   };
 
   const fetchPostComments = async (
     id: number,
     options = {},
-  ): Promise<IPostsList> => {
-    return await api<IPostsList>(() => `/post/${id}/comments`, options);
+  ): Promise<ICommentsData> => {
+    return await api<ICommentsData>(() => `/post/${id}/comments`, options);
   };
 
   return {
