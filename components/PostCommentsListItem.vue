@@ -49,13 +49,13 @@ const emit = defineEmits<{
         </button>
       </div>
       <!--      comments meta data-->
-      <div v-if="isDeleted" class="mt-4 flex items-center gap-5">
+      <div v-if="!isDeleted" class="mt-[13px] flex items-center gap-5">
         <span
-          class="text-sm leading-[10px] tracking-[-0.078px] text-gray-border"
+          class="text-sm leading-[12px] tracking-[-0.078px] text-gray-border"
           >{{ date }}</span
         >
         <button
-          class="text-sm tracking-[-0.078px] text-primary-red underline decoration-secondary-red decoration-[0.5px] underline-offset-4"
+          class="text-sm leading-[12px] tracking-[-0.078px] text-primary-red underline decoration-secondary-red decoration-[0.5px] underline-offset-4"
           @click="emit('onDeleteComment', id)"
         >
           Delete

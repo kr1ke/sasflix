@@ -1,10 +1,41 @@
+<script setup lang="ts">
+import type { IPostsList } from '~/composables/usePosts';
+
+import { usePostReactions } from '~/composables/usePostReactions';
+
+const { onLike, onDislike } = usePostReactions();
+
+const { fetchPosts } = usePosts();
+
+const { data, status } = await useAsyncData<IPostsList>(
+  () =>
+    fetchPosts({
+      query: {
+        limit: 5,
+      },
+    }),
+  {
+    // добавляем isLiked и isDisliked к каждому посту
+    transform: (data: IPostsList) => {
+      return {
+        ...data,
+        posts: data.posts.map((post: IPost) => ({
+          ...post,
+          reactions: { ...post.reactions, isLiked: false, isDisliked: false },
+        })),
+      };
+    },
+  },
+);
+</script>
+
 <template>
   <section
-    v-if="status === 'success' && localPostsData"
+    v-if="status === 'success'"
     class="flex max-w-[676px] flex-col items-center gap-8"
   >
     <BasePost
-      v-for="post in localPostsData.posts"
+      v-for="post in data.posts"
       :id="post.id"
       :key="post.id"
       :title="post.title"
@@ -16,32 +47,3 @@
     />
   </section>
 </template>
-
-<script setup lang="ts">
-import type { IPost, IPostsList } from '~/composables/usePosts';
-
-import { usePostReactions } from '~/composables/usePostReactions';
-const { onLike, onDislike } = usePostReactions();
-
-const { fetchPosts } = usePosts();
-
-const localPostsData = ref<IPostsList | null>(null);
-const { status } = await useAsyncData(() =>
-  fetchPosts({
-    query: {
-      limit: 5,
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onResponse: ({ response }: any) => {
-      const postsData = response._data as IPostsList;
-      localPostsData.value = {
-        ...postsData,
-        posts: postsData.posts.map((post: IPost) => ({
-          ...post,
-          reactions: { ...post.reactions, isLiked: false, isDisliked: false },
-        })),
-      };
-    },
-  }),
-);
-</script>
